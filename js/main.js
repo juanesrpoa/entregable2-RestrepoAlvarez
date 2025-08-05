@@ -4,6 +4,18 @@ const productos = [
   { id: 3, nombre: "Zapatos", precio: 60 }
 ];
 
+const selectProducto = document.getElementById("producto");
+
+selectProducto.innerHTML = "";
+
+productos.forEach(producto => {
+  const option = document.createElement("option");
+  option.value = producto.id;
+  option.textContent = `${producto.nombre} - $${producto.precio}`;
+  selectProducto.appendChild(option);
+});
+
+
 let carrito = [];
 
 const form = document.getElementById("formProducto");
@@ -57,12 +69,22 @@ form.addEventListener("submit", (e) => {
   const id = parseInt(document.getElementById("producto").value);
   const cantidad = parseInt(document.getElementById("cantidad").value);
   agregarAlCarrito(id, cantidad);
+  Swal.fire({
+  icon: 'success',
+  title: 'Producto agregado',
+  text: 'El producto se añadió al carrito.'
+  });
 });
 
 botonVaciar.addEventListener("click", () => {
   carrito = [];
   guardarCarrito();
   mostrarCarrito();
+  Swal.fire({
+  icon: 'info',
+  title: 'Carrito vacío',
+  text: 'Se han eliminado todos los productos.'
+  });
 });
 
 cargarCarrito();
